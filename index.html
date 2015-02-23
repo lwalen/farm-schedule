@@ -1,0 +1,52 @@
+<html ng-app="farmApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Farm Scheduler</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js"></script>
+    <script>
+      // var apiURL = "https://immense-ravine-9825.herokuapp.com/";
+      var apiURL = "http://localhost:3000/";
+
+      var farmApp = angular.module('farmApp', []);
+      farmApp.controller('ScheduleCtrl', function ($scope, $http){
+        $scope.loadVisits = function() {
+          $http.get(apiURL + 'visits.json?access_code=booger').success(function(data) {
+            $scope.visits = data;
+          });
+        };
+
+        $scope.addVisit = function() {
+          $http.post(apiURL + 'visits?access_code=booger', {person: $scope.person, start_on: $scope.start_on, end_on: $scope.end_on})
+          .success(function(data) {
+            console.log(data);
+            $scope.loadVisits();
+          })
+        };
+
+        $scope.loadVisits();
+      });
+    </script>
+  </head>
+  <body ng-controller="ScheduleCtrl">
+    <table>
+      <tr>
+        <th>Person</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+      </tr>
+      <tr ng-repeat="visit in visits">
+        <td>{{visit.person}}</td>
+        <td>{{visit.start_on}}</td>
+        <td>{{visit.end_on}}</td>
+      </tr>
+      <tr>
+        <form ng-submit="addVisit()">
+          <td><input ng-model='person' type='text'/></td>
+          <td><input ng-model='start_on' type='text'/></td>
+          <td><input ng-model='end_on' type='text'/></td>
+          <td><input type='submit'/></td>
+        </form>
+      </tr>
+    </table>
+  </body>
+</html>
