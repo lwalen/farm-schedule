@@ -18,9 +18,18 @@
         $scope.addVisit = function() {
           $http.post(apiURL + 'visits?access_code=booger', {person: $scope.person, start_on: $scope.start_on, end_on: $scope.end_on})
           .success(function(data) {
-            console.log(data);
             $scope.loadVisits();
-          })
+            $scope.person = '';
+            $scope.start_on = '';
+            $scope.end_on = '';
+          });
+        };
+
+        $scope.removeVisit = function(id) {
+          $http.delete(apiURL + 'visits/' + id + '?access_code=booger')
+          .success(function(data) {
+            $scope.loadVisits();
+          });
         };
 
         $scope.loadVisits();
@@ -38,6 +47,7 @@
         <td>{{visit.person}}</td>
         <td>{{visit.start_on}}</td>
         <td>{{visit.end_on}}</td>
+        <td><a href='' ng-click='removeVisit(visit.id)'>Delete</a></td>
       </tr>
       <tr>
         <form ng-submit="addVisit()">
