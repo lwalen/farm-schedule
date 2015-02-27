@@ -11,6 +11,20 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
     $http.get(apiURL + 'happenings.json?access_code=' + $scope.access_code)
     .success(function(data) {
       $scope.happenings = data;
+
+      // http://stackoverflow.com/a/27806458/4109697
+      var repl = [];
+      data.map(function(obj) {
+          repl.push({
+              title:  obj.subject,
+              start:  obj.start_date,
+              end:    moment(obj.end_date).add(1, 'day'),
+              allDay: true
+          });
+      });
+
+      $('#calendar').fullCalendar('removeEvents');
+      $('#calendar').fullCalendar('addEventSource', repl);
     });
   };
 
@@ -48,5 +62,5 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
     }
   });
 
-  $('#calendar').fullCalendar({});
+  $('#calendar').fullCalendar();
 });
