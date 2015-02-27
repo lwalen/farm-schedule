@@ -6,8 +6,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <script>
-      var apiURL = "https://immense-ravine-9825.herokuapp.com/";
-      // var apiURL = "http://localhost:3000/";
+      // var apiURL = "https://immense-ravine-9825.herokuapp.com/";
+      var apiURL = "http://localhost:3000/";
 
       var farmApp = angular.module('farmApp', []);
 
@@ -15,37 +15,37 @@
 
         $scope.access_code = '';
 
-        $scope.loadVisits = function() {
-          $http.get(apiURL + 'visits.json?access_code=' + $scope.access_code)
+        $scope.loadHappenings = function() {
+          $http.get(apiURL + 'happenings.json?access_code=' + $scope.access_code)
           .success(function(data) {
-            $scope.visits = data;
+            $scope.happenings = data;
           });
         };
 
-        $scope.addVisit = function() {
-          $http.post(apiURL + 'visits?access_code=' + $scope.access_code,
+        $scope.addHappening = function() {
+          $http.post(apiURL + 'happenings?access_code=' + $scope.access_code,
             {
-              person: $scope.person,
-              start_on: $scope.start_on,
-              end_on: $scope.end_on
+              subject: $scope.subject,
+              start_date: $scope.start_date,
+              end_date: $scope.end_date
             })
           .success(function(data) {
-            $scope.loadVisits();
-            $scope.person = '';
-            $scope.start_on = '';
-            $scope.end_on = '';
+            $scope.loadHappenings();
+            $scope.subject = '';
+            $scope.start_date = '';
+            $scope.end_date = '';
           });
         };
 
-        $scope.removeVisit = function(id) {
-          $http.delete(apiURL + 'visits/' + id + '?access_code=' + $scope.access_code)
+        $scope.removeHappening = function(id) {
+          $http.delete(apiURL + 'happenings/' + id + '?access_code=' + $scope.access_code)
           .success(function(data) {
-            $scope.loadVisits();
+            $scope.loadHappenings();
           });
         };
 
         $scope.checkCode = function() {
-          $scope.loadVisits();
+          $scope.loadHappenings();
         };
 
         $('.date').datepicker({
@@ -72,21 +72,21 @@
 
     <table>
       <tr>
-        <th>Person</th>
+        <th>Subject</th>
         <th>Start Date</th>
         <th>End Date</th>
       </tr>
-      <tr ng-repeat="visit in visits">
-        <td>{{visit.person}}</td>
-        <td>{{visit.start_on | date}}</td>
-        <td>{{visit.end_on | date}}</td>
-        <td><a href='' ng-click='removeVisit(visit.id)'>Delete</a></td>
+      <tr ng-repeat="happening in happenings">
+        <td>{{happening.subject}}</td>
+        <td>{{happening.start_date | date}}</td>
+        <td>{{happening.end_date | date}}</td>
+        <td><a href='' ng-click='removeHappening(happening.id)'>Delete</a></td>
       </tr>
       <tr>
-        <form ng-submit="addVisit()">
-          <td><input ng-model='person' type='text'/></td>
-          <td><input ng-model='start_on' class='date' type='text'/></td>
-          <td><input ng-model='end_on' class='date' type='text'/></td>
+        <form ng-submit="addHappening()">
+          <td><input ng-model='subject' type='text'/></td>
+          <td><input ng-model='start_date' class='date' type='text'/></td>
+          <td><input ng-model='end_date' class='date' type='text'/></td>
           <td><input type='submit'/></td>
         </form>
       </tr>
