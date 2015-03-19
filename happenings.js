@@ -1,5 +1,5 @@
-// var apiURL = "https://immense-ravine-9825.herokuapp.com/";
-var apiURL = "http://localhost:3000/";
+var apiURL = "https://immense-ravine-9825.herokuapp.com/";
+//var apiURL = "http://localhost:3000/";
 
 var farmApp = angular.module('farmApp', []);
 
