@@ -67,7 +67,19 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
     $scope.loadHappenings();
   };
 
-  $('.date').datepicker({
+  $('.start-date').datepicker({
+    dateFormat: "M d, yy",
+    onSelect: function(date) {
+      var nextDay = new Date(date);
+      nextDay.setDate(nextDay.getDate() + 1);
+
+      $('.end-date').datepicker('option', 'defaultDate', nextDay);
+      $scope[$(this).attr('ng-model')] = date;
+      $scope.$apply();
+    }
+  });
+
+  $('.end-date').datepicker({
     dateFormat: "M d, yy",
     onSelect: function(date) {
       $scope[$(this).attr('ng-model')] = date;
