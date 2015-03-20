@@ -27,11 +27,11 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
             });
         });
 
+        $('.content').show();
+
         $('#calendar').fullCalendar();
         $('#calendar').fullCalendar('removeEvents');
         $('#calendar').fullCalendar('addEventSource', repl);
-
-        $('.content').show();
       }
     }).error(function(data, status) {
       if (status === 401) {

@@ -33,14 +33,16 @@
     <div class='content'>
       <div id="calendar"></div>
 
+      <h3>New Event</h3>
       <form ng-submit="addHappening()">
         <td><input ng-model='subject' type='text' placeholder='Name'/></td>
         <td><input ng-model='start_date' class='date start-date' type='text'
           placeholder='Start Date'/></td>
         <td><input ng-model='end_date' class='date end-date' type='text'
           placeholder='End Date (optional)'/></td>
-        <td><input type='submit'/></td>
+        <td><input type='submit' value='Create'/></td>
       </form>
+
     </div>
   </div>
 
