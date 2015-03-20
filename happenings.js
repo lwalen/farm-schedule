@@ -9,22 +9,35 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
 
   $scope.loadHappenings = function() {
     $http.get(apiURL + 'happenings.json?access_code=' + $scope.access_code)
-    .success(function(data) {
+    .success(function(data, status) {
+
       $scope.happenings = data;
 
-      // http://stackoverflow.com/a/27806458/4109697
-      var repl = [];
-      data.map(function(obj) {
-          repl.push({
-              title:  obj.subject,
-              start:  obj.start_date,
-              end:    moment(obj.end_date).add(1, 'day'),
-              allDay: true
-          });
-      });
+      if (status === 200) {
+        $('.access-code').hide();
 
-      $('#calendar').fullCalendar('removeEvents');
-      $('#calendar').fullCalendar('addEventSource', repl);
+        // http://stackoverflow.com/a/27806458/4109697
+        var repl = [];
+        data.map(function(obj) {
+            repl.push({
+                title:  obj.subject,
+                start:  obj.start_date,
+                end:    moment(obj.end_date).add(1, 'day'),
+                allDay: true
+            });
+        });
+
+        $('#calendar').fullCalendar();
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', repl);
+
+        $('.content').show();
+      }
+    }).error(function(data, status) {
+      if (status === 401) {
+        $('.error').text("Invalid access code.");
+        $('.error').show();
+      }
     });
   };
 
@@ -61,6 +74,4 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
       $scope.$apply();
     }
   });
-
-  $('#calendar').fullCalendar();
 });
