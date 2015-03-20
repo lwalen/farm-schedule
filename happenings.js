@@ -9,22 +9,35 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
 
   $scope.loadHappenings = function() {
     $http.get(apiURL + 'happenings.json?access_code=' + $scope.access_code)
-    .success(function(data) {
+    .success(function(data, status) {
+
       $scope.happenings = data;
 
-      // http://stackoverflow.com/a/27806458/4109697
-      var repl = [];
-      data.map(function(obj) {
-          repl.push({
-              title:  obj.subject,
-              start:  obj.start_date,
-              end:    moment(obj.end_date).add(1, 'day'),
-              allDay: true
-          });
-      });
+      if (status === 200) {
+        $('.access-code').hide();
 
-      $('#calendar').fullCalendar('removeEvents');
-      $('#calendar').fullCalendar('addEventSource', repl);
+        // http://stackoverflow.com/a/27806458/4109697
+        var repl = [];
+        data.map(function(obj) {
+            repl.push({
+                title:  obj.subject,
+                start:  obj.start_date,
+                end:    moment(obj.end_date).add(1, 'day'),
+                allDay: true
+            });
+        });
+
+        $('.content').show();
+
+        $('#calendar').fullCalendar();
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', repl);
+      }
+    }).error(function(data, status) {
+      if (status === 401) {
+        $('.error').text("Invalid access code.");
+        $('.error').show();
+      }
     });
   };
 
@@ -54,13 +67,31 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
     $scope.loadHappenings();
   };
 
-  $('.date').datepicker({
+  $('.start-date').datepicker({
     dateFormat: "M d, yy",
     onSelect: function(date) {
+
+      // Set end date to be day after this
+      var nextDay = new Date(date);
+      nextDay.setDate(nextDay.getDate() + 1);
+      $('.end-date').datepicker('option', 'defaultDate', nextDay);
+
       $scope[$(this).attr('ng-model')] = date;
       $scope.$apply();
     }
   });
 
-  $('#calendar').fullCalendar();
+  $('.end-date').datepicker({
+    dateFormat: "M d, yy",
+    onSelect: function(date) {
+
+      // Set start date to be day before this
+      var previousDay = new Date(date);
+      previousDay.setDate(previousDay.getDate() - 1);
+      $('.start-date').datepicker('option', 'defaultDate', previousDay);
+
+      $scope[$(this).attr('ng-model')] = date;
+      $scope.$apply();
+    }
+  });
 });
