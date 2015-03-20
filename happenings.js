@@ -70,10 +70,12 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
   $('.start-date').datepicker({
     dateFormat: "M d, yy",
     onSelect: function(date) {
+
+      // Set end date to be day after this
       var nextDay = new Date(date);
       nextDay.setDate(nextDay.getDate() + 1);
-
       $('.end-date').datepicker('option', 'defaultDate', nextDay);
+
       $scope[$(this).attr('ng-model')] = date;
       $scope.$apply();
     }
@@ -82,6 +84,12 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
   $('.end-date').datepicker({
     dateFormat: "M d, yy",
     onSelect: function(date) {
+
+      // Set start date to be day before this
+      var previousDay = new Date(date);
+      previousDay.setDate(previousDay.getDate() - 1);
+      $('.start-date').datepicker('option', 'defaultDate', previousDay);
+
       $scope[$(this).attr('ng-model')] = date;
       $scope.$apply();
     }
