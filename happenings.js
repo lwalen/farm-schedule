@@ -11,6 +11,8 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
     $http.get(apiURL + 'happenings.json?access_code=' + $scope.access_code)
     .success(function(data, status) {
 
+      $('#submit_access_code').val('Submit');
+
       $scope.happenings = data;
 
       if (status === 200) {
@@ -34,8 +36,14 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
         $('#calendar').fullCalendar('addEventSource', repl);
       }
     }).error(function(data, status) {
+
+      $('#submit_access_code').val('Submit');
+
       if (status === 401) {
         $('.error').text("Invalid access code.");
+        $('.error').show();
+      } else {
+        $('.error').text("Unknown error.");
         $('.error').show();
       }
     });
@@ -64,6 +72,7 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
   };
 
   $scope.checkCode = function() {
+    $('#submit_access_code').val("Loading...");
     $scope.loadHappenings();
   };
 
