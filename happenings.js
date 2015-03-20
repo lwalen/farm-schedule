@@ -1,5 +1,5 @@
 // var apiURL = "https://immense-ravine-9825.herokuapp.com/";
-var apiURL = "http://localhost:3000/";
+var apiURL = "http://10.0.0.5:3000/";
 
 var farmApp = angular.module('farmApp', []);
 
@@ -10,6 +10,8 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
   $scope.loadHappenings = function() {
     $http.get(apiURL + 'happenings.json?access_code=' + $scope.access_code)
     .success(function(data, status) {
+
+      $('#submit_access_code').val('Submit');
 
       $scope.happenings = data;
 
@@ -34,8 +36,14 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
         $('#calendar').fullCalendar('addEventSource', repl);
       }
     }).error(function(data, status) {
+
+      $('#submit_access_code').val('Submit');
+
       if (status === 401) {
         $('.error').text("Invalid access code.");
+        $('.error').show();
+      } else {
+        $('.error').text("Unknown error.");
         $('.error').show();
       }
     });
@@ -64,6 +72,7 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
   };
 
   $scope.checkCode = function() {
+    $('#submit_access_code').val("Loading...");
     $scope.loadHappenings();
   };
 
