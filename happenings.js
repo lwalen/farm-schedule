@@ -1,17 +1,17 @@
 // var apiURL = "https://immense-ravine-9825.herokuapp.com/";
 var apiURL = "http://10.0.0.5:3000/";
 
-var farmApp = angular.module('farmApp', []);
+var farmApp = angular.module('farmApp', ['ngCookies']);
 
-farmApp.controller('ScheduleCtrl', function ($scope, $http){
-
-  $scope.access_code = '';
+farmApp.controller('ScheduleCtrl', function($scope, $http, $cookieStore) {
 
   $scope.loadHappenings = function() {
     $http.get(apiURL + 'happenings.json?access_code=' + $scope.access_code)
     .success(function(data, status) {
 
-      $('#submit_access_code').val('Submit');
+      if (!$cookieStore.get('access_code')) {
+        $cookieStore.put('access_code', "blahkjlfdsj");
+      }
 
       $scope.happenings = data;
 
@@ -103,4 +103,13 @@ farmApp.controller('ScheduleCtrl', function ($scope, $http){
       $scope.$apply();
     }
   });
+
+  $scope.access_code = '';
+
+  var stored_access_code = $cookieStore.get('access_code');
+  if (stored_access_code) {
+    $scope.access_code = stored_access_code;
+    $scope.loadHappenings();
+  }
+
 });
