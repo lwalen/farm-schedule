@@ -9,9 +9,7 @@ farmApp.controller('ScheduleCtrl', function($scope, $http, $cookieStore) {
     $http.get(apiURL + 'happenings.json?access_code=' + $scope.access_code)
     .success(function(data, status) {
 
-      if (!$cookieStore.get('access_code')) {
-        $cookieStore.put('access_code', "blahkjlfdsj");
-      }
+      $cookieStore.put('access_code', $scope.access_code);
 
       $scope.happenings = data;
 
