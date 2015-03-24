@@ -28,6 +28,12 @@
     <div class='content'>
       <div id="calendar"></div>
 
+      <div id="list">
+        <li ng-repeat="happening in happenings">
+          {{happening.subject}} ({{happening.start_date | date}} - {{happening.end_date | date}})
+        </li>
+      </div>
+
       <h3>New Event</h3>
       <form ng-submit="addHappening()">
         <input ng-model='subject' type='text' placeholder='Name'/>
