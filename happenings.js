@@ -29,7 +29,13 @@ farmApp.controller('ScheduleCtrl', function($scope, $http, $cookieStore) {
 
         $('.content').show();
 
-        $('#calendar').fullCalendar();
+        $('#calendar').fullCalendar({
+          header: {
+            left: 'title',
+            center: '',
+            right: 'today prev,next'
+          }
+        });
         $('#calendar').fullCalendar('removeEvents');
         $('#calendar').fullCalendar('addEventSource', repl);
       }

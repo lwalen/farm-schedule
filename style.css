@@ -22,3 +22,7 @@ h1 {
 	color: #F33;
 	display: none;
 }
+
+#calendar {
+	margin-bottom: 50px;
+}
