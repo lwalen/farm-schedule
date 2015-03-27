@@ -30,7 +30,9 @@
 
       <div id="list">
         <li ng-repeat="happening in happenings">
-          {{happening.subject}} ({{happening.start_date | date}} - {{happening.end_date | date}})
+          {{happening.subject}}
+          ({{happening.start_date | date}} - {{happening.end_date | date}})
+          <a ng-click='removeHappening(happening.id)' href=''>remove</a>
         </li>
       </div>
 
