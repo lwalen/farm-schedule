@@ -113,6 +113,7 @@ farmApp.controller('ScheduleCtrl', function($scope, $http, $cookieStore) {
   var stored_access_code = $cookieStore.get('access_code');
   if (stored_access_code) {
     $scope.access_code = stored_access_code;
+    $('#submit_access_code').val("Loading...");
     $scope.loadHappenings();
   }
 
