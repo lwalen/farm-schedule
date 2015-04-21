@@ -1,5 +1,11 @@
+html {
+	color: #111;
+	font-family: 'Droid Sans', sans-serif;
+}
+
 h1 {
 	margin-top: 30px;
+	font-size: 4em;
 }
 
 .center-text {
@@ -23,6 +29,17 @@ h1 {
 	display: none;
 }
 
+.access-code-form {
+	margin-bottom: 20px;
+}
+
 #calendar {
 	margin-bottom: 50px;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+	h1 {
+		margin-top: 90px;
+		font-size: 2em;
+	}
 }

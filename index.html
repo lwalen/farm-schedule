@@ -2,26 +2,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Farm Scheduler</title>
+  <title>Walen Farm</title>
 
   <link href='//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css' rel='stylesheet'>
-  <link href='skeleton-no-tables.css' rel='stylesheet'>
   <link href='//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.0/fullcalendar.min.css' rel='stylesheet'>
+  <link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
   <link href='style.css' rel='stylesheet'>
 
 </head>
 <body ng-controller="ScheduleCtrl">
 
   <div class="container">
-    <h1 class='center-text'>Walen Farm Schedule</h1>
+    <h1 class='center-text'>Walen Farm</h1>
 
     <div class="row center-text access-code">
-      <form ng-submit='checkCode()'>
-        <label for='access_code'>Please enter the access code</label>
+      <form class='access-code-form' ng-submit='checkCode()'>
+        <label for='access_code'>Access code: </label>
         <input ng-model='access_code' id='access_code' type='password'/>
         <input type='submit' id='submit_access_code'/>
-        <div class='error'></div>
       </form>
+      <div class='error'></div>
+      <div class='message'></div>
     </div>
 
     <div class='content'>
@@ -54,6 +55,6 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.0/fullcalendar.min.js"></script>
-  <script src="happenings.js"></script>
+  <script src="farm.js"></script>
 </body>
 </html>

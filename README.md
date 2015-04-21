@@ -1,3 +1,5 @@
-# Happenings
+# Walen Farm
 
-Simple AngularJS app to work on a shared schedule.
+Various tools for the Walen Farm.
+
+* Calendar

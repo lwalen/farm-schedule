@@ -42,6 +42,7 @@ farmApp.controller('ScheduleCtrl', function($scope, $http, $cookieStore) {
     }).error(function(data, status) {
 
       $('#submit_access_code').val('Submit');
+      $('.message').text('');
 
       if (status === 401) {
         $('.error').text("Invalid access code.");
@@ -77,6 +78,7 @@ farmApp.controller('ScheduleCtrl', function($scope, $http, $cookieStore) {
 
   $scope.checkCode = function() {
     $('#submit_access_code').val("Loading...");
+    $('.message').text("It could take up to 10 seconds to load, please wait!");
     $scope.loadHappenings();
   };
 
@@ -114,6 +116,7 @@ farmApp.controller('ScheduleCtrl', function($scope, $http, $cookieStore) {
   if (stored_access_code) {
     $scope.access_code = stored_access_code;
     $('#submit_access_code').val("Loading...");
+    $('.message').text("It could take up to 10 seconds to load, please wait!");
     $scope.loadHappenings();
   }
 
